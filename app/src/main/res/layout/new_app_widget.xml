@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/widget_margin"
+    >
+
+    <TextView
+        android:id="@+id/down_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
+        android:text="▼"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        />
+
+    <TextView
+        android:id="@+id/input_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="83.4"
+        android:background="@android:color/holo_red_light"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/down_text"
+        android:layout_toLeftOf="@+id/up_text"
+        android:layout_centerVertical="true"
+        android:layout_alignBottom="@+id/appwidget_text"
+        />
+
+    <TextView
+        android:id="@+id/up_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/upload_button"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
+        android:text="▲"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        />
+
+    <Button
+        android:id="@+id/upload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        android:background="@android:color/transparent"
+        android:text="送信"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="24sp"
+        />
+
+
+</RelativeLayout>
