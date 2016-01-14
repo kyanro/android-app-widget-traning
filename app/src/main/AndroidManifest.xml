@@ -22,6 +22,8 @@
         <receiver android:name=".NewAppWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.kyanro.widgettraining.ACTION_UP_CLICK"/>
+                <action android:name="com.kyanro.widgettraining.ACTION_DOWN_CLICK"/>
             </intent-filter>
 
             <meta-data
