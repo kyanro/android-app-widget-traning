@@ -89,8 +89,8 @@ public class NewAppWidget extends AppWidgetProvider {
 //                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(userResponse -> {
-                        Toast.makeText(
-                                context, userResponse.body().login, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(
+//                                context, userResponse.body().login, Toast.LENGTH_LONG).show();
                     }, Throwable::printStackTrace);
         } else if (ACTION_DOWN_CLICK.equals(action)) {
             Log.d("mydevlog", "button down clicked");

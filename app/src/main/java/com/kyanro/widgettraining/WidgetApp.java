@@ -3,26 +3,26 @@ package com.kyanro.widgettraining;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.kyanro.widgettraining.netowrk.GithubClient;
+import com.squareup.okhttp.Dispatcher;
+import com.squareup.okhttp.HttpUrl;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import okhttp3.Dispatcher;
-import okhttp3.HttpUrl;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
-import okhttp3.logging.HttpLoggingInterceptor.Level;
-import retrofit2.GsonConverterFactory;
-import retrofit2.Retrofit;
-import retrofit2.Retrofit.Builder;
-import retrofit2.RxJavaCallAdapterFactory;
+import retrofit.GsonConverterFactory;
+import retrofit.Retrofit;
+import retrofit.Retrofit.Builder;
+import retrofit.RxJavaCallAdapterFactory;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * widgetのトレーニング用アプリ
@@ -40,17 +40,8 @@ public class WidgetApp extends Application {
         logging.setLevel(Level.BODY);
 
         ExecutorService executorService = Executors.newScheduledThreadPool(2);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .dispatcher(new Dispatcher(executorService))
-                .addInterceptor(chain -> {
-                    HttpUrl url = chain.request().url().newBuilder()
-                            .addQueryParameter("testquery", "testvalue")
-                            .build();
-                    Request request = chain.request().newBuilder().url(url).build();
-                    return chain.proceed(request);
-                })
-                .addInterceptor(logging)
-                .build();
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setDispatcher(new Dispatcher(executorService));
 
         // retrofit のクライアントを設定
         Retrofit retrofit = new Builder()
@@ -61,5 +52,14 @@ public class WidgetApp extends Application {
                 .build();
         githubClient = retrofit.create(GithubClient.class);
         Log.d("mydevlog", "oncreate!");
+
+        githubClient.getUser("kyanro")
+//                    .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userResponse -> {
+                    Toast.makeText(
+                            this, userResponse.login, Toast.LENGTH_LONG).show();
+                }, Throwable::printStackTrace);
+
     }
 }

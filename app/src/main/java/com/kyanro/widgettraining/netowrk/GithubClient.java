@@ -2,9 +2,9 @@ package com.kyanro.widgettraining.netowrk;
 
 import com.kyanro.widgettraining.models.github.User;
 
-import retrofit2.Response;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
+import retrofit.Response;
+import retrofit.http.GET;
+import retrofit.http.Path;
 import rx.Observable;
 
 /**
@@ -12,5 +12,5 @@ import rx.Observable;
  */
 public interface GithubClient {
     @GET("/users/{name}")
-    Observable<Response<User>> getUser(@Path("name") String name);
+    Observable<User> getUser(@Path("name") String name);
 }
