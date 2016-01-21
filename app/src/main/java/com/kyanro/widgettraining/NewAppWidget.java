@@ -9,6 +9,9 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Implementation of App Widget functionality.
  * App Widget Configuration implemented in {@link NewAppWidgetConfigureActivity NewAppWidgetConfigureActivity}
@@ -81,7 +84,15 @@ public class NewAppWidget extends AppWidgetProvider {
         String action = intent.getAction();
         if (ACTION_UP_CLICK.equals(action)) {
             Log.d("mydevlog", "button up clicked");
-        }else if (ACTION_DOWN_CLICK.equals(action)) {
+            WidgetApp app = (WidgetApp) context.getApplicationContext();
+            app.githubClient.getUser("kyanro")
+//                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(userResponse -> {
+                        Toast.makeText(
+                                context, userResponse.body().login, Toast.LENGTH_LONG).show();
+                    }, Throwable::printStackTrace);
+        } else if (ACTION_DOWN_CLICK.equals(action)) {
             Log.d("mydevlog", "button down clicked");
         }
     }
